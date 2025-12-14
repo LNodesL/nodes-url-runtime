@@ -66,7 +66,7 @@ function installPackage(packageName) {
     return;
   }
   
-  console.log(`Installing ${packageName}...`);
+  // console.log(`Installing ${packageName}...`);
   
   try {
     // Install package to the runtime directory
@@ -78,9 +78,9 @@ function installPackage(packageName) {
     });
     
     installedPackages.add(packageName);
-    console.log(`✓ Installed ${packageName}`);
+    // console.log(`✓ Installed ${packageName}`);
   } catch (error) {
-    console.error(`Failed to install ${packageName}:`, error.message);
+    // console.error(`Failed to install ${packageName}:`, error.message);
     throw error;
   }
 }
@@ -167,6 +167,7 @@ function installDependencies(code) {
 
 /**
  * Executes the downloaded script with proper module resolution
+ * @returns {*} The exported value from the executed script (module.exports)
  */
 function executeScript(code, scriptUrl) {
   const require = createRequire(import.meta.url);
@@ -229,11 +230,14 @@ function executeScript(code, scriptUrl) {
     const originalNodePath = process.env.NODE_PATH || '';
     process.env.NODE_PATH = [runtimeNodeModules, originalNodePath].filter(Boolean).join(':');
     
-    // Execute using require (works for CommonJS)
-    require(tempFile);
+    // Execute using require (works for CommonJS) and capture the exported value
+    const result = require(tempFile);
     
     // Restore NODE_PATH
     process.env.NODE_PATH = originalNodePath;
+    
+    // Return the exported value (module.exports)
+    return result;
   } catch (error) {
     // If require fails, try with eval (for ES modules or other cases)
     if (error.code === 'ERR_REQUIRE_ESM') {
@@ -251,6 +255,7 @@ function executeScript(code, scriptUrl) {
 /**
  * Main run function - downloads and executes a script from a URL
  * @param {string} url - URL of the script to download and execute
+ * @returns {Promise<*>} The exported value from the executed script (module.exports)
  */
 export async function run(url) {
   if (!url) {
@@ -258,15 +263,18 @@ export async function run(url) {
   }
   
   try {
-    console.log(`Downloading script from ${url}...`);
+    // console.log(`Downloading script from ${url}...`);
     const code = await download(url);
-    console.log('✓ Script downloaded');
+    // console.log('✓ Script downloaded');
     
-    console.log('Executing script...');
-    executeScript(code, url);
-    console.log('✓ Script executed successfully');
+    // console.log('Executing script...');
+    const result = executeScript(code, url);
+    // console.log('✓ Script executed successfully');
+    
+    // Return the output from the executed script
+    return result;
   } catch (error) {
-    console.error('Error:', error.message);
+    // console.error('Error:', error.message);
     throw error;
   }
 }
