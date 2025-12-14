@@ -1,0 +1,21 @@
+{
+  "name": "nodes-url-runtime",
+  "version": "0.0.1",
+  "description": "Download and execute scripts dynamically with automatic dependency installation",
+  "main": "index.js",
+  "type": "module",
+  "keywords": [
+    "runtime",
+    "dynamic",
+    "import",
+    "dependency",
+    "installer"
+  ],
+  "author": "",
+  "license": "MIT",
+  "engines": {
+    "node": ">=14.0.0"
+  },
+  "dependencies": {}
+}
+
