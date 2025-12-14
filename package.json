@@ -1,6 +1,6 @@
 {
   "name": "nodes-url-runtime",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "Download and execute scripts dynamically with automatic dependency installation",
   "main": "index.js",
   "type": "module",
