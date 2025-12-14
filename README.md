@@ -2,6 +2,9 @@
 
 A Node.js package that downloads and executes scripts from URLs with automatic dependency installation at runtime.
 
+Official Package: https://www.npmjs.com/package/nodes-url-runtime
+
+
 ## Features
 
 - 📥 Downloads scripts from any HTTP/HTTPS URL
